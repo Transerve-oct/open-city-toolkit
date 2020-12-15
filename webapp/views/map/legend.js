@@ -12,7 +12,7 @@ L.Control.GroupedLayers.prototype._addItem = function (obj) {
   // The original functionality -- of course -- preserved and called :)
   const label = layerAddOrigFunc.call(this, obj);
   // Only for WMS -- otherwise it has no sense.
-  if (obj.layer instanceof L.TileLayer.WMS && obj.layer.options.legend) {
+  if (obj.layer instanceof  L.tileLayer.betterWms && obj.layer.options.legend) {
     label.children[0].addEventListener('click', handleLegendClick.bind(obj.layer));
   }
   return label;
@@ -55,7 +55,6 @@ function handleLegendClick(evt) {
     div.id = this.wmsParams.layers
     div.className = 'leaflet-legend-item'
     content.appendChild(div)
-
     const p = L.DomUtil.create('p')
     p.className = 'leaflet-legend-layer-name'
     p.innerHTML = services.filter(ser => ser.layers === this.options.layers)[0].displayName
