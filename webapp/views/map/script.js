@@ -8,22 +8,164 @@ const map = new L.Map('map', {
   measureControl: true
 });
 
-const rasterWMS = geoserverUrl + 'geoserver/raster/wms';
-const vectorWMS = geoserverUrl + 'geoserver/vector/wms';
+const vectorWMS = geoserverUrl + '/vector/wms';
 
-// Background map
+// Base layers
 const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
-const hot = L.tileLayer('https://tile-{s}.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
-  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors; Humanitarian map style by <a href="https://www.hotosm.org/">HOT</a>'
+const waterLines = L.tileLayer.wms(vectorWMS, {
+  layers: 'vector:water_lines_osm',
+  format: 'image/png',
+  transparent: true,
+  maxZoom: 20,
+  minZoom: 1
+});
+
+const roads = L.tileLayer.wms(vectorWMS, {
+  layers: 'vector:lines_osm',
+  format: 'image/png',
+  transparent: true,
+  maxZoom: 20,
+  minZoom: 1
+});
+
+const buildings = L.tileLayer.wms(vectorWMS, {
+  layers: 'vector:polygons_osm',
+  format: 'image/png',
+  transparent: true,
+  maxZoom: 20,
+  minZoom: 1
+});
+
+const selection = L.tileLayer.wms(vectorWMS, {
+  layers: 'vector:selection',
+  format: 'image/png',
+  transparent: true,
+  maxZoom: 20,
+  minZoom: 1
 });
 
 // Drawings
 const drawnItems = L.featureGroup().addTo(map);
 
-// Control for map legends
+// extension layers
+const queryArea1 = L.tileLayer.wms(vectorWMS, {
+  layers: 'vector:query_area_1',
+  format: 'image/png',
+  transparent: true,
+  maxZoom: 20,
+  minZoom: 1
+});
+
+const strickenArea = L.tileLayer.wms(vectorWMS, {
+  layers: 'vector:m1_stricken_area',
+  format: 'image/png',
+  transparent: true,
+  maxZoom: 20,
+  minZoom: 3
+});
+
+const timeMap = L.tileLayer.wms(vectorWMS, {
+  layers: 'vector:m1_time_map',
+  format: 'image/png',
+  transparent: true,
+  maxZoom: 20,
+  minZoom: 1
+});
+
+const fromPoints = L.tileLayer.wms(vectorWMS, {
+  layers: 'vector:m1_from_points',
+  format: 'image/png',
+  transparent: true,
+  maxZoom: 20,
+  minZoom: 3
+});
+
+const viaPoints = L.tileLayer.wms(vectorWMS, {
+  layers: 'vector:m1_via_points',
+  format: 'image/png',
+  transparent: true,
+  maxZoom: 20,
+  minZoom: 3
+});
+
+const toPoints = L.tileLayer.wms(vectorWMS, {
+  layers: 'vector:m1_to_points',
+  format: 'image/png',
+  transparent: true,
+  maxZoom: 20,
+  minZoom: 3
+});
+
+const accessibilityMap = L.tileLayer.wms(vectorWMS, {
+  layers: 'vector:m1b_accessibility_map',
+  format: 'image/png',
+  transparent: true,
+  legend_yes: true,
+  maxZoom: 20,
+  minZoom: 3
+});
+
+const accessibilityPoints = L.tileLayer.wms(vectorWMS, {
+  layers: 'vector:m1b_points',
+  format: 'image/png',
+  transparent: true,
+  maxZoom: 20,
+  minZoom: 3
+});
+
+const queryMap = L.tileLayer.wms(vectorWMS, {
+  layers: 'vector:query_map',
+  format: 'image/png',
+  transparent: true,
+  maxZoom: 20,
+  minZoom: 3
+});
+
+const queryResult = L.tileLayer.wms(vectorWMS, {
+  layers: 'vector:query_result',
+  format: 'image/png',
+  transparent: true,
+  maxZoom: 20,
+  minZoom: 3
+});
+
+/**
+ * WFS
+ */
+const owsrootUrl = 'http://localhost:8080/geoserver/ows';
+
+const defaultParameters = {
+  service: 'WFS',
+  request: 'GetFeature',
+  typeName: 'vector:lines_osm',
+  outputFormat: 'application/json',
+  SrsName: 'EPSG:4326'
+};
+const parameters = L.Util.extend(defaultParameters);
+const URL = owsrootUrl + L.Util.getParamString(parameters);
+let WFSLayer = null;
+
+const ajax = $.ajax({
+  type: 'GET',
+  url: URL,
+  success: function (response) {
+    WFSLayer = L.geoJson(response, {
+      style: function (feature) { },
+      onEachFeature: function (feature, layer) {
+        popupOptions = { maxWidth: 200 };
+        const text = Object.keys(feature.properties).map(key => `${key}: ${feature.properties[key]}`).join('<br>')
+        layer.bindPopup(text
+          , popupOptions);
+      }
+    }).addTo(map);
+  }
+});
+
+
+//Control for map legends. For those item, where the linked map has a "legend_yes: true," property, a second checkbox will displayed.
 L.control.legend(
   { position: 'bottomleft' }
 ).addTo(map);
