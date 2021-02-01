@@ -9,7 +9,7 @@
           <sld:PointSymbolizer>
             <sld:Graphic>
               <sld:ExternalGraphic>
-                <sld:OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="graduation-hat.2.png"/>
+                <sld:OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="graduation-hat.1.png"/>
                 <sld:Format>image/png</sld:Format>
               </sld:ExternalGraphic>
               <sld:Size>18</sld:Size>

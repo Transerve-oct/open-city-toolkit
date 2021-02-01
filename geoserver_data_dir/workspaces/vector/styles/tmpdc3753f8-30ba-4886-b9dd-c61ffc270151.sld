@@ -5,16 +5,17 @@
       <sld:Name>Default Styler</sld:Name>
       <sld:FeatureTypeStyle>
         <sld:Rule>
-          <sld:Title>yellow point</sld:Title>
-          <sld:PointSymbolizer>
-            <sld:Graphic>
-              <sld:ExternalGraphic>
-                <sld:OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="graduation-hat.2.png"/>
-                <sld:Format>image/png</sld:Format>
-              </sld:ExternalGraphic>
-              <sld:Size>18</sld:Size>
-            </sld:Graphic>
-          </sld:PointSymbolizer>
+          <sld:Title>Unaccesible areas</sld:Title>
+          <sld:PolygonSymbolizer>
+            <sld:Fill>
+              <sld:CssParameter name="fill">#ADFF2F</sld:CssParameter>
+              <sld:CssParameter name="fill-opacity">0.5</sld:CssParameter>
+            </sld:Fill>
+            <sld:Stroke>
+              <sld:CssParameter name="stroke">#ADFF2F</sld:CssParameter>
+              <sld:CssParameter name="stroke-opacity">0</sld:CssParameter>
+            </sld:Stroke>
+          </sld:PolygonSymbolizer>
         </sld:Rule>
         <sld:VendorOption name="ruleEvaluation">first</sld:VendorOption>
       </sld:FeatureTypeStyle>

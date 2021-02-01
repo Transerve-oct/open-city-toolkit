@@ -1,8 +1,8 @@
 /* @title yellow point */
 * {
     mark: symbol(circle);
-    mark-size: 16px;
-    mark: url(online-course.png);
+    mark-size: 18px;
+    mark: url(graduation-hat.2.png);     
     mark-mime: "image/png";
     :mark {
       fill: red;

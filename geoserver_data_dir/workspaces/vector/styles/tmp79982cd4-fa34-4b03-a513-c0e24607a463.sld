@@ -8,10 +8,22 @@
           <sld:Title>yellow point</sld:Title>
           <sld:PointSymbolizer>
             <sld:Graphic>
-              <sld:ExternalGraphic>
-                <sld:OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="graduation-hat.2.png"/>
-                <sld:Format>image/png</sld:Format>
-              </sld:ExternalGraphic>
+              <sld:Mark>
+                <sld:WellKnownName>circle</sld:WellKnownName>
+                <sld:Fill>
+                  <sld:GraphicFill>
+                    <sld:Graphic>
+                      <sld:ExternalGraphic>
+                        <sld:OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="graduation-hat.2.png"/>
+                        <sld:Format>image/jpeg</sld:Format>
+                      </sld:ExternalGraphic>
+                    </sld:Graphic>
+                  </sld:GraphicFill>
+                </sld:Fill>
+                <sld:Stroke>
+                  <sld:CssParameter name="stroke-width">2</sld:CssParameter>
+                </sld:Stroke>
+              </sld:Mark>
               <sld:Size>18</sld:Size>
             </sld:Graphic>
           </sld:PointSymbolizer>
