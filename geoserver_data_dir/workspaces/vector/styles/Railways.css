@@ -1,0 +1,8 @@
+/* @title Unaccesible areas */
+* {
+  stroke: #63584f;
+  stroke-width: 1;
+  stroke-opacity: 0;
+  fill: #63584f	;
+  fill-opacity:1;
+}
